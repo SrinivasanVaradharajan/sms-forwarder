@@ -3,7 +3,7 @@ package com.smsforwarder.app.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
- android.telephony.SmsManager
+import android.telephony.SmsManager
 import android.util.Log
 import com.smsforwarder.app.data.ForwardingLog
 import com.smsforwarder.app.data.ForwardingRule
