@@ -7,8 +7,9 @@ import android.content.Intent
 class BootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        val smsIntent = Intent(context, ::class.java)
-        smsIntent.setAction("android.intent.action.BOOT_COMPLETED")
-        context.startService(Intent(context, ::class.java).setClass(context, SmsForwarderService::class.java))
+        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+            val serviceIntent = Intent(context, com.smsforwarder.app.SmsForwarderService::class.java)
+            context.startService(serviceIntent)
+        }
     }
 }

@@ -18,60 +18,54 @@ fun AddRuleDialog(
     var containsText by remember { mutableStateOf(rule?.containsText ?: "") }
     var targetPhoneNumber by remember { mutableStateOf(rule?.targetPhoneNumber ?: "") }
 
-    Dialog(onDismissRequest = onDismiss) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.Start
-        ) {
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Rule Name") },
-                modifier = Modifier.fillMaxWidth()
-            )
+    if (!isVisible) return
 
-            OutlinedTextField(
-                value = containsText,
-                onValueChange = { containsText = it },
-                label = { Text("Contains Text") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            OutlinedTextField(
-                value = targetPhoneNumber,
-                onValueChange = { targetPhoneNumber = it },
-                label = { Text("Target Phone Number") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.End,
-                modifier = Modifier.fillMaxWidth()
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            Button(onClick = {
+                onSave(
+                    ForwardingRule(
+                        name = name,
+                        containsText = containsText,
+                        targetPhoneNumber = targetPhoneNumber
+                    )
+                )
+                onDismiss()
+            }) {
+                Text("Save Rule")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        },
+        title = { Text("Add Rule") },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Button(
-                    onClick = {
-                        onSave(
-                            ForwardingRule(
-                                name = name,
-                                containsText = containsText,
-                                targetPhoneNumber = targetPhoneNumber
-                            )
-                        )
-                        onDismiss()
-                    }
-                ) {
-                    Text("Save Rule")
-                }
-
-                Button(onClick = onDismiss) {
-                    Text("Cancel")
-                }
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Rule Name") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = containsText,
+                    onValueChange = { containsText = it },
+                    label = { Text("Contains Text") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = targetPhoneNumber,
+                    onValueChange = { targetPhoneNumber = it },
+                    label = { Text("Target Phone Number") },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
-    }
+    )
 }

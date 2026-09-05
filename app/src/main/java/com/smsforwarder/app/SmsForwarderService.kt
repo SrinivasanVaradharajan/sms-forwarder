@@ -1,13 +1,14 @@
 package com.smsforwarder.app
 
-import android.app.ForegroundService
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
+import android.app.Service
+import android.content.Intent
 import android.os.Build
+import android.os.IBinder
 import android.util.Log
 
-class SmsForwarderService : ForegroundService() {
+class SmsForwarderService : Service() {
 
     private val TAG = "SmsForwarderService"
 
@@ -27,7 +28,7 @@ class SmsForwarderService : ForegroundService() {
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)
 
-            val intent = android.content.Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             val pendingIntent = android.app.PendingIntent.getActivity(
                 this, 0, intent, android.app.PendingIntent.FLAG_IMMUTABLE
             )
@@ -52,12 +53,16 @@ class SmsForwarderService : ForegroundService() {
         }
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return START_STICKY
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "Service destroyed")
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
     }
 }

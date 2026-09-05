@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.SmsForwarder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#6750A4</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSurface">#FFFEFEFE</item>
+        <item name="colorOnSurface">#FF1C1B1F</item>
+    </style>
+</resources>
