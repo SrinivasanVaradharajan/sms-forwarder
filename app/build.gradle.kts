@@ -6,6 +6,7 @@ plugins {
 android {
     namespace = "com.smsforwarder.app"
     compileSdk = 34
+    val releaseKeystorePath = providers.gradleProperty("RELEASE_KEYSTORE_PATH").orNull
 
     defaultConfig {
         applicationId = "com.smsforwarder.app"
@@ -23,10 +24,27 @@ android {
         kotlinCompilerExtensionVersion = "1.5.8"
     }
 
+    signingConfigs {
+        create("release") {
+            if (!releaseKeystorePath.isNullOrBlank()) {
+                storeFile = file(releaseKeystorePath)
+                storePassword = providers.gradleProperty("RELEASE_STORE_PASSWORD").orNull
+                keyAlias = providers.gradleProperty("RELEASE_KEY_ALIAS").orNull
+                keyPassword = providers.gradleProperty("RELEASE_KEY_PASSWORD").orNull
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = if (releaseKeystorePath.isNullOrBlank()) {
+                signingConfigs.getByName("debug")
+            } else {
+                signingConfigs.getByName("release")
+            }
         }
     }
 
