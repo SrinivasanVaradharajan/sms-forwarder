@@ -1,6 +1,6 @@
 package com.smsforwarder.app.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkMode
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
@@ -36,7 +36,7 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun SmsForwarderTheme(content: @Composable () -> Unit) {
-    val colorScheme = if (isSystemInDarkMode()) DarkColorScheme else LightColorScheme
+    val colorScheme = if (isSystemInDarkTheme()) DarkColorScheme else LightColorScheme
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography(),

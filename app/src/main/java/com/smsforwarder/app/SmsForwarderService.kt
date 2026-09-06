@@ -33,7 +33,7 @@ class SmsForwarderService : Service() {
                 this, 0, intent, android.app.PendingIntent.FLAG_IMMUTABLE
             )
 
-            val builder = android.app.NotificationCompat.Builder(this, channelId)
+            val builder = androidx.core.app.NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle("SMS Forwarder Running")
                 .setContentText("Forwarding messages based on configured rules")
@@ -43,7 +43,7 @@ class SmsForwarderService : Service() {
             val notification = builder.build()
             startForeground(1, notification)
         } else {
-            val notification = android.app.NotificationCompat.Builder(this, "default")
+            val notification = androidx.core.app.NotificationCompat.Builder(this, "default")
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle("SMS Forwarder Running")
                 .setContentText("Forwarding messages based on configured rules")
