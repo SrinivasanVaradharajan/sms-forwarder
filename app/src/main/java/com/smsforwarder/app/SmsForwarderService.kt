@@ -48,6 +48,7 @@ class SmsForwarderService : Service() {
                 .setContentTitle("SMS Forwarder Running")
                 .setContentText("Forwarding messages based on configured rules")
                 .setOngoing(true)
+                .build()
 
             startForeground(1, notification)
         }
