@@ -3,6 +3,7 @@ package com.smsforwarder.app.utils
 import android.content.Context
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -21,16 +22,6 @@ interface TextbeeApi {
         @Header("Authorization") authHeader: String,
         @Query("id") messageId: String
     ): MessageStatus
-}
-
-@Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.FIELD)
-annotation class SerializedName(val value: String)
-
-// Data classes for API requests/responses
-sealed class ApiResponse {
-    data class Success(val messageId: String, val status: String) : ApiResponse()
-    data class Error(val code: Int, val message: String) : ApiResponse()
 }
 
 // Simplified response classes for Retrofit
