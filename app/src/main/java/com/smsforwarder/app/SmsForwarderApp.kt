@@ -1,10 +1,14 @@
 package com.smsforwarder.app
 
 import android.app.Application
+import com.smsforwarder.app.data.LogRepository
+import com.smsforwarder.app.data.RuleRepository
 import com.smsforwarder.app.utils.TextbeeService
 
 class SmsForwarderApp : Application() {
     private var _apiKey: String = "txb_GqpA3xNIDInaWQGye0DFlgPS1bVMW6sP"
+    val ruleRepository by lazy { RuleRepository(applicationContext) }
+    val logRepository by lazy { LogRepository(applicationContext) }
 
     fun setApiKey(apiKey: String) {
         _apiKey = apiKey
@@ -27,6 +31,5 @@ class SmsForwarderApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        initializeApiService()
     }
 }
