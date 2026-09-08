@@ -1,15 +1,50 @@
 package com.smsforwarder.app
 
 import android.app.Application
-import com.smsforwarder.app.data.RuleRepository
-import com.smsforwarder.app.data.LogRepository
+import com.smsforwarder.app.utils.TextbeeService
 
 class SmsForwarderApp : Application() {
-    val ruleRepository by lazy { RuleRepository(getSharedPreferences("sms_forwarder_prefs", MODE_PRIVATE)) }
-    val logRepository by lazy { LogRepository(getSharedPreferences("sms_forwarder_prefs", MODE_PRIVATE)) }
+    private var _apiKey: String? = null
+
+    fun setApiKey(apiKey: String) {
+        _apiKey = apiKey
+        initializeApiService()
+    }
+
+    fun getApiKey(): String? = _apiKey
+
+    private fun initializeApiService() {
+        _apiKey?.let { apiKey ->
+            TextbeeService.initialize(this, apiKey)
+        }
+    }
 
     companion object {
         lateinit var instance: SmsForwarderApp
+            private set
+
+        fun getInstance(): SmsForwarderApp = instance
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        instance = this
+    }
+}
+
+    fun getApiKey(): String? = _apiKey
+
+    private fun initializeApiService() {
+        _apiKey?.let { apiKey ->
+            TextbeeService.initialize(this, apiKey)
+        }
+    }
+
+    companion object {
+        lateinit var instance: SmsForwarderApp
+            private set
+
+        fun getInstance(): SmsForwarderApp = instance
     }
 
     override fun onCreate() {
