@@ -1,5 +1,3 @@
-package com.smsforwarder.app
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +11,7 @@ package com.smsforwarder.app
         android:theme="@style/Theme.SmsForwarder">
 
         <receiver
-            android:name=".receiver.TextSmsReceiver"
+            android:name=".receiver.SmsReceiver"
             android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
