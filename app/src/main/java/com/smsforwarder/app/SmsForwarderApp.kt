@@ -1,46 +1,23 @@
 package com.smsforwarder.app
 
 import android.app.Application
-import android.content.SharedPreferences
 import com.smsforwarder.app.data.LogRepository
 import com.smsforwarder.app.data.RuleRepository
 import com.smsforwarder.app.utils.TextbeeService
 
 class SmsForwarderApp : Application() {
-    private var _apiKey: String = "txb_GqpA3xNIDInaWQGye0DFlgPS1bVMW6sP"
-    private var _sharedPrefs: SharedPreferences? = null
-    private lateinit var _instance: SmsForwarderApp
-
-    val ruleRepository: RuleRepository
-        get() = RuleRepository(_sharedPrefs!!)
-
-    val logRepository: LogRepository
-        get() = LogRepository(_sharedPrefs!!)
-
-    fun setApiKey(apiKey: String) {
-        _apiKey = apiKey
-        initializeApiService()
-    }
-
-    fun getApiKey(): String = _apiKey
-
-    private fun initializeApiService() {
-        TextbeeService.initialize(this, _apiKey)
-    }
+    
+    val ruleRepository by lazy { RuleRepository(getSharedPreferences("sms_forwarder_prefs", MODE_PRIVATE)) }
+    val logRepository by lazy { LogRepository(getSharedPreferences("sms_forwarder_prefs", MODE_PRIVATE)) }
 
     companion object {
-        @JvmStatic
-        fun getInstance(): SmsForwarderApp {
-            if (!::_instance.isInitialized) {
-                throw IllegalStateException("SmsForwarderApp is not initialized. Call onCreate() first.")
-            }
-            return _instance
-        }
+        lateinit var instance: SmsForwarderApp
+            private set
     }
 
     override fun onCreate() {
         super.onCreate()
-        _instance = this
-        _sharedPrefs = getSharedPreferences("sms_forwarder_prefs", android.content.Context.MODE_PRIVATE)
+        instance = this
+        TextbeeService.initialize(this, "txb_GqpA3xNIDInaWQGye0DFlgPS1bVMW6sP")
     }
 }
