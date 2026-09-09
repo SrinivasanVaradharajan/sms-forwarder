@@ -9,6 +9,7 @@ import com.smsforwarder.app.utils.TextbeeService
 class SmsForwarderApp : Application() {
     private var _apiKey: String = "txb_GqpA3xNIDInaWQGye0DFlgPS1bVMW6sP"
     private var _sharedPrefs: SharedPreferences? = null
+    private lateinit var _instance: SmsForwarderApp
 
     val ruleRepository: RuleRepository
         get() = RuleRepository(_sharedPrefs!!)
@@ -30,13 +31,13 @@ class SmsForwarderApp : Application() {
     companion object {
         @JvmStatic
         fun getInstance(): SmsForwarderApp {
-            return instance
+            return _instance
         }
     }
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        _instance = this
         _sharedPrefs = getSharedPreferences("sms_forwarder_prefs", android.content.Context.MODE_PRIVATE)
     }
 }
