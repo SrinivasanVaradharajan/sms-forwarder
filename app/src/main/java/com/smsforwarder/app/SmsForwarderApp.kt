@@ -28,10 +28,10 @@ class SmsForwarderApp : Application() {
     }
 
     companion object {
-        lateinit var instance: SmsForwarderApp
-            private set
-
-        fun getInstance(): SmsForwarderApp = instance
+        @JvmStatic
+        fun getInstance(): SmsForwarderApp {
+            return instance
+        }
     }
 
     override fun onCreate() {
