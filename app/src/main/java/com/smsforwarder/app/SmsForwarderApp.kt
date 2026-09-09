@@ -1,14 +1,20 @@
 package com.smsforwarder.app
 
 import android.app.Application
+import android.content.SharedPreferences
 import com.smsforwarder.app.data.LogRepository
 import com.smsforwarder.app.data.RuleRepository
 import com.smsforwarder.app.utils.TextbeeService
 
 class SmsForwarderApp : Application() {
     private var _apiKey: String = "txb_GqpA3xNIDInaWQGye0DFlgPS1bVMW6sP"
-    val ruleRepository by lazy { RuleRepository(applicationContext) }
-    val logRepository by lazy { LogRepository(applicationContext) }
+    private var _sharedPrefs: SharedPreferences? = null
+
+    val ruleRepository: RuleRepository
+        get() = RuleRepository(_sharedPrefs!!)
+
+    val logRepository: LogRepository
+        get() = LogRepository(_sharedPrefs!!)
 
     fun setApiKey(apiKey: String) {
         _apiKey = apiKey
@@ -31,5 +37,6 @@ class SmsForwarderApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        _sharedPrefs = getSharedPreferences("sms_forwarder_prefs", android.content.Context.MODE_PRIVATE)
     }
 }
