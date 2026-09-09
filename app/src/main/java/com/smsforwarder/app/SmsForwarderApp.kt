@@ -31,6 +31,9 @@ class SmsForwarderApp : Application() {
     companion object {
         @JvmStatic
         fun getInstance(): SmsForwarderApp {
+            if (!::_instance.isInitialized) {
+                throw IllegalStateException("SmsForwarderApp is not initialized. Call onCreate() first.")
+            }
             return _instance
         }
     }
